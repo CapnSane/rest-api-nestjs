@@ -1,5 +1,12 @@
-import { Controller, Post, Body, Get, Param, Patch } from '@nestjs/common';
-import { stringify } from 'querystring';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -37,6 +44,12 @@ export class ProductsController {
     @Body('price') prodPrice: number,
   ) {
     this.productsService.updateProduct(prodId, prodTitle, prodDesc, prodPrice);
-    return null;
+    return 'Product successfully updated';
+  }
+
+  @Delete(':id')
+  removeProduct(@Param('id') prodId: string) {
+    this.productsService.deleteProduct(prodId);
+    return 'Product successfully deleted';
   }
 }
