@@ -17,11 +17,15 @@ export class ProductsController {
     @Body('title') prodTitle: string,
     @Body('description') prodDesc: string,
     @Body('price') prodPrice: number,
+    @Body('quantity') prodQuantity: number,
+    @Body('fabrication') prodFabrication: number,
   ) {
     const generatedId = this.productsService.insertProduct(
       prodTitle,
       prodDesc,
       prodPrice,
+      prodQuantity,
+      prodFabrication,
     );
     return { id: generatedId };
   }
@@ -42,8 +46,17 @@ export class ProductsController {
     @Body('title') prodTitle: string,
     @Body('description') prodDesc: string,
     @Body('price') prodPrice: number,
+    @Body('quantity') prodQuantity: number,
+    @Body('fabrication') prodFabrication: number,
   ) {
-    this.productsService.updateProduct(prodId, prodTitle, prodDesc, prodPrice);
+    this.productsService.updateProduct(
+      prodId,
+      prodTitle,
+      prodDesc,
+      prodPrice,
+      prodQuantity,
+      prodFabrication,
+    );
     return 'Product successfully updated';
   }
 
