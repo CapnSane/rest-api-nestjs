@@ -23,7 +23,7 @@ export class ProductsService {
 
   updateProduct(productId: string, newProduct: Product) {
     const [product, index] = this.findProduct(productId);
-    const updatedProduct = { ...product, ...newProduct };
+    const updatedProduct = { ...product, ...newProduct } as Product;
 
     this.products[index] = updatedProduct;
   }
