@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { Product } from './product.model';
+import { Product, Features } from './product.model';
 
 @Injectable()
 export class ProductsService {
@@ -8,19 +8,25 @@ export class ProductsService {
 
   insertProduct(
     title: string,
+    subtitle: string,
     description: string,
+    collection: string,
     price: number,
     quantity: number,
     fabrication: number,
+    country: string,
   ) {
     const prodId = Math.random().toString();
     const newProduct = new Product(
       prodId,
       title,
+      subtitle,
       description,
+      collection,
       price,
       quantity,
       fabrication,
+      country,
     );
     this.products.push(newProduct);
     return prodId;
@@ -38,18 +44,27 @@ export class ProductsService {
   updateProduct(
     productId: string,
     title: string,
+    subtitle: string,
     description: string,
+    collection: string,
     price: number,
     quantity: number,
     fabrication: number,
+    country: string,
   ) {
     const [product, index] = this.findProduct(productId);
     const updatedProduct = { ...product };
     if (title) {
       updatedProduct.title = title;
     }
+    if (subtitle) {
+      updatedProduct.subtitle = subtitle;
+    }
     if (description) {
       updatedProduct.description = description;
+    }
+    if (collection) {
+      updatedProduct.collection = collection;
     }
     if (price) {
       updatedProduct.price = price;
@@ -59,6 +74,9 @@ export class ProductsService {
     }
     if (fabrication) {
       updatedProduct.fabrication = fabrication;
+    }
+    if (country) {
+      updatedProduct.country = country;
     }
     this.products[index] = updatedProduct;
   }

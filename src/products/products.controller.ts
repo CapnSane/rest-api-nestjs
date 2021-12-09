@@ -15,17 +15,23 @@ export class ProductsController {
   @Post()
   addProduct(
     @Body('title') prodTitle: string,
+    @Body('subtitle') prodSubtitle: string,
     @Body('description') prodDesc: string,
+    @Body('collection') prodCollection: string,
     @Body('price') prodPrice: number,
     @Body('quantity') prodQuantity: number,
     @Body('fabrication') prodFabrication: number,
+    @Body('country') prodCountry: string,
   ) {
     const generatedId = this.productsService.insertProduct(
       prodTitle,
+      prodSubtitle,
       prodDesc,
+      prodCollection,
       prodPrice,
       prodQuantity,
       prodFabrication,
+      prodCountry,
     );
     return { id: generatedId };
   }
@@ -44,18 +50,24 @@ export class ProductsController {
   updateProduct(
     @Param('id') prodId: string,
     @Body('title') prodTitle: string,
+    @Body('subtitle') prodSubtitle: string,
     @Body('description') prodDesc: string,
+    @Body('collection') prodCollection: string,
     @Body('price') prodPrice: number,
     @Body('quantity') prodQuantity: number,
     @Body('fabrication') prodFabrication: number,
+    @Body('country') prodCountry: string,
   ) {
     this.productsService.updateProduct(
       prodId,
       prodTitle,
+      prodSubtitle,
       prodDesc,
+      prodCollection,
       prodPrice,
       prodQuantity,
       prodFabrication,
+      prodCountry,
     );
     return 'Product successfully updated';
   }
