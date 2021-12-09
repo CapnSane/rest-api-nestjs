@@ -1,35 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { Product, Features } from './product.model';
+import { Product } from './product.model';
 
 @Injectable()
 export class ProductsService {
   private products: Product[] = [];
 
-  insertProduct(
-    title: string,
-    subtitle: string,
-    description: string,
-    collection: string,
-    price: number,
-    quantity: number,
-    fabrication: number,
-    country: string,
-  ) {
-    const prodId = Math.random().toString();
-    const newProduct = new Product(
-      prodId,
-      title,
-      subtitle,
-      description,
-      collection,
-      price,
-      quantity,
-      fabrication,
-      country,
-    );
-    this.products.push(newProduct);
-    return prodId;
+  insertProduct(product: Product) {
+    const id = Math.random().toString();
+    this.products.push({ ...product, id });
+    return id;
   }
 
   getProducts() {
@@ -41,43 +21,10 @@ export class ProductsService {
     return { ...product };
   }
 
-  updateProduct(
-    productId: string,
-    title: string,
-    subtitle: string,
-    description: string,
-    collection: string,
-    price: number,
-    quantity: number,
-    fabrication: number,
-    country: string,
-  ) {
+  updateProduct(productId: string, newProduct: Product) {
     const [product, index] = this.findProduct(productId);
-    const updatedProduct = { ...product };
-    if (title) {
-      updatedProduct.title = title;
-    }
-    if (subtitle) {
-      updatedProduct.subtitle = subtitle;
-    }
-    if (description) {
-      updatedProduct.description = description;
-    }
-    if (collection) {
-      updatedProduct.collection = collection;
-    }
-    if (price) {
-      updatedProduct.price = price;
-    }
-    if (quantity) {
-      updatedProduct.quantity = quantity;
-    }
-    if (fabrication) {
-      updatedProduct.fabrication = fabrication;
-    }
-    if (country) {
-      updatedProduct.country = country;
-    }
+    const updatedProduct = { ...product, ...newProduct };
+
     this.products[index] = updatedProduct;
   }
 

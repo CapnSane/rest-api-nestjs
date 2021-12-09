@@ -9,9 +9,9 @@ export class Product {
     public quantity: number,
     public fabrication: number,
     public country: string,
+    public Features: Features,
   ) {}
 }
-
 export class Features {
   constructor(
     public material: string,

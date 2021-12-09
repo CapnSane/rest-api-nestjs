@@ -7,32 +7,15 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
+import { Product } from './product.model';
 import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
   @Post()
-  addProduct(
-    @Body('title') prodTitle: string,
-    @Body('subtitle') prodSubtitle: string,
-    @Body('description') prodDesc: string,
-    @Body('collection') prodCollection: string,
-    @Body('price') prodPrice: number,
-    @Body('quantity') prodQuantity: number,
-    @Body('fabrication') prodFabrication: number,
-    @Body('country') prodCountry: string,
-  ) {
-    const generatedId = this.productsService.insertProduct(
-      prodTitle,
-      prodSubtitle,
-      prodDesc,
-      prodCollection,
-      prodPrice,
-      prodQuantity,
-      prodFabrication,
-      prodCountry,
-    );
+  addProduct(@Body() product: Product) {
+    const generatedId = this.productsService.insertProduct(product);
     return { id: generatedId };
   }
 
@@ -46,29 +29,9 @@ export class ProductsController {
     return this.productsService.getSingleProduct(prodId);
   }
 
-  @Patch(':id')
-  updateProduct(
-    @Param('id') prodId: string,
-    @Body('title') prodTitle: string,
-    @Body('subtitle') prodSubtitle: string,
-    @Body('description') prodDesc: string,
-    @Body('collection') prodCollection: string,
-    @Body('price') prodPrice: number,
-    @Body('quantity') prodQuantity: number,
-    @Body('fabrication') prodFabrication: number,
-    @Body('country') prodCountry: string,
-  ) {
-    this.productsService.updateProduct(
-      prodId,
-      prodTitle,
-      prodSubtitle,
-      prodDesc,
-      prodCollection,
-      prodPrice,
-      prodQuantity,
-      prodFabrication,
-      prodCountry,
-    );
+  @Patch()
+  updateProduct(@Body() product: Product) {
+    this.productsService.updateProduct(product.id, product);
     return 'Product successfully updated';
   }
 
